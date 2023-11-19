@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('lesson_visitors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('rating');
             $table->dateTime('datetime_visited');
             $table->foreignId('lesson_id')
                 ->references('id')
                 ->on('lessons');
-            $table->string('status');
-            $table->integer('rating');
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('lesson_visitors');
     }
 };
