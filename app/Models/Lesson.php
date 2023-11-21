@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\GetReviewRatingTrait;
 
 class Lesson extends Model
 {
-    use HasFactory;
+    use HasFactory, GetReviewRatingTrait;
     protected $fillable = [
         'name',
         'description',
@@ -19,45 +20,26 @@ class Lesson extends Model
         'rating',
     ];
 
-    public function lessonUsersQuantity()
-    {
-        return $this->visitors()->count();
-    }
-
-    public function sumRating(): bool|int
-    {
-        $ratings = $this->visitors()->get();
-        if (empty($ratings[0])) {
-            return false;
-        }
-        $sum = 0;
-        foreach ($ratings as $row) {
-            $sum += $row->rating;
-        }
-        return $sum;
-    }
-
-    public function averageLessonRating($sumRating, $usersQuantity): float|int
-    {
-        $avg = $sumRating / $usersQuantity;
-        return $avg;
-    }
-
 
 // Relations
 
-    private function visitors(): HasMany
+    public function visitors(): HasMany
     {
         return $this->hasMany(LessonVisitor::class);
     }
 
-    private function program(): BelongsTo
+    public function program(): BelongsTo
     {
         return $this->belongsTo(Program::class);
     }
 
-    private function employee(): BelongsTo
+    public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(LessonReview::class);
     }
 }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('lesson_visitors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('rating');
             $table->dateTime('datetime_visited');
             $table->foreignId('lesson_id')
                 ->references('id')

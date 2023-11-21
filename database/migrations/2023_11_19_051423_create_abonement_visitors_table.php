@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('abonement_visitors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('rating');
             $table->dateTime('datetime_visited');
             $table->foreignId('user_id')
                 ->references('id')
