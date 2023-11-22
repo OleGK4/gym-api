@@ -17,7 +17,6 @@ class Lesson extends Model
         'employee_id',
         'program_id',
         'status',
-        'rating',
     ];
 
 

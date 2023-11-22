@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\GetReviewRatingTrait;
 
-class Employee extends Model implements ReviewRatingInterface
+class Employee extends User
 {
     public $timestamps = false;
     use HasFactory, GetReviewRatingTrait;

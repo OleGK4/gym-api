@@ -18,7 +18,10 @@ class Abonement extends Model
     ];
 
     public function remainedDays() {
-        // TODO: remainedDays() method
+        $startDate = new DateTime($this->start);
+        $endDate = new DateTime($this->end);
+        $interval = $startDate->diff($endDate);
+        return $interval->format('%a');
     }
 
 // Relations

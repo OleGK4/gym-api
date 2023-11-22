@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\FilteringTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AbonementType extends Model
 {
     public $timestamps = false;
-    use HasFactory;
+    use HasFactory, FilteringTrait;
 
     protected $fillable = [
         'name',
@@ -17,14 +18,9 @@ class AbonementType extends Model
         'days_amount',
     ];
 
-    public function sortByName() {
-        // TODO: sortByName() method
-    }
-    public function sortByPrice() {
-        // TODO: sortByPrice() method
-    }
+
     public function sortByDaysAmount() {
-        // TODO: sortByDaysAmount() method
+        return $this->orderBy('days_amount')->get();
     }
 
 

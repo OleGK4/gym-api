@@ -15,8 +15,6 @@ class EmployeeReview extends Model
         'rating',
         'user_id',
         'employee_id',
-        'role_id',
-        'score',
     ];
 
 // Relations
