@@ -16,7 +16,6 @@ class Employee extends User
         'passport_number',
         'address',
         'education',
-        'image',
     ];
 
 

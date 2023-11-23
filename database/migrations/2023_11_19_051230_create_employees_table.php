@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('passport_number');
             $table->string('address');
             $table->string('education');
-            $table->string('image');
         });
     }
 
