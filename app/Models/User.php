@@ -4,13 +4,18 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\ImageTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, ImageTrait;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -19,8 +24,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'patronymic',
+        'age',
+        'gender',
         'email',
+        'phone',
         'password',
+        'role_id',
+        'score',
     ];
 
     /**
@@ -42,4 +54,52 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function addUserScore($score, $lessonDuration) {
+
+        // Add sum of lesson's duration as user's score
+        $score += $lessonDuration;
+        $this->score = $score;
+        $this->save();
+    }
+
+// Relations
+    // User's domains
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function abonement(): HasOne
+    {
+        return $this->hasOne(Abonement::class);
+    }
+
+    public function abonementPrograms(): HasManyThrough
+    {
+        return $this->hasManyThrough(AbonementProgram::class, Abonement::class);
+    }
+
+    // Visits
+    public function abonementVisits(): HasMany
+    {
+        return $this->hasMany(AbonementVisitor::class);
+    }
+
+    public function lessonVisits(): HasMany
+    {
+        return $this->hasMany(LessonVisitor::class);
+    }
+
+    // Reviews
+    public function employeeReviews(): HasMany
+    {
+        return $this->hasMany(EmployeeReview::class);
+    }
+
+    public function programReviews(): HasMany
+    {
+        return $this->hasMany(ProgramReview::class);
+    }
+
 }

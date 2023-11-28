@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('abonement_visitors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('datetime_visited');
-            $table->foreignId('lesson_id')
+            $table->foreignId('user_id')
                 ->references('id')
-                ->on('lessons');
-            $table->string('status');
-            $table->integer('rating');
+                ->on('users');
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('abonement_visitors');
     }
 };

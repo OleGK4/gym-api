@@ -27,6 +27,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('score');
+            $table->string('image');
         });
     }
 

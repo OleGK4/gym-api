@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lessons', function (Blueprint $table) {
+        Schema::create('abonement_programs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('description');
-            $table->time('duration');
-            $table->foreignId('employee_id')
+            $table->foreignId('abonement_id')
                 ->references('id')
-                ->on('employees');
+                ->on('abonements')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreignId('program_id')
                 ->references('id')
-                ->on('programs');
-            $table->string('status');
+                ->on('programs')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lessons');
+        Schema::dropIfExists('abonement_programs');
     }
 };
